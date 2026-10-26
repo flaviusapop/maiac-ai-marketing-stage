@@ -6,7 +6,7 @@
     dispose?.();
     const root = document.documentElement;
     const cards = [...document.querySelectorAll('.work-card')];
-    const mouse = matchMedia('(hover: hover) and (pointer: fine)');
+    const mouse = matchMedia('(min-width: 900px) and (hover: hover) and (pointer: fine)');
     const events = new AbortController();
     let active = null, cursor = null, frame = 0, point = null;
     const on = (target, type, listener, options = {}) => target.addEventListener(type, listener, { ...options, signal: events.signal });
