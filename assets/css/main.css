@@ -350,7 +350,7 @@ body.menu-open::after {
 .work-card__meta { font-size: 16px; line-height: 1.4; color: var(--muted); }
 .work-card .sr-only { position: absolute; inline-size: 1px; block-size: 1px; padding: 0; margin: -1px; overflow: clip; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
-/* Figma 26 October: service label follows a mouse; touch/no-JS keeps it on the image. */
+/* Service labels follow a mouse or a direct touch; no-JS retains the resting label. */
 .work-label {
   position: absolute;
   inset-inline-start: 16px;
@@ -368,6 +368,7 @@ body.menu-open::after {
   pointer-events: none;
 }
 .work-label svg { flex: none; inline-size: 0.6em; block-size: 0.6em; }
+.work-label.is-touch-following { z-index: 1; will-change: transform; }
 .work-cursor-ready [data-work-label] { display: none; }
 .work-label--cursor {
   position: fixed;

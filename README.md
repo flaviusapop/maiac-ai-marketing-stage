@@ -2,10 +2,12 @@
 
 Preview: https://flaviusapop.github.io/maiac-ai-marketing-stage/
 
-Source: [maiac-ai-marketing / stage](https://github.com/flaviusapop/maiac-ai-marketing/tree/stage), commit `8a2c4238b099eb945ef637f8c6ec89d3381c14e0`.
+Source: [maiac-ai-marketing / stage](https://github.com/flaviusapop/maiac-ai-marketing/tree/stage), commit `f35cb42ad8e688b5896020c074a7c2e93bc16870`.
 
-The production website remains at https://maiac.agency/ on the source repository's `main` branch. This separate repository only hosts the staging snapshot. It excludes the production custom-domain declaration and sitemap, and adds staging-only noindex/robots safeguards. Canonical URLs, design and contact behavior are retained from the source. Do not copy these hosting safeguards into production.
+Latest update adds passive finger-following work labels with a release-to-rest motion and Dragos Cojocea as the fifth team member, titled SEO, AEO, Content Automation. Native scroll/pinch, desktop cursor behavior and previous cards are preserved. Reduced Motion keeps mobile labels still.
 
-The October 26 update implements the Figma change log in frame `2:13`: revised copy, work-card industries and service cursor labels, and the six-client logo row. The orange-footer frame is historical. The combined Racing Bulls/RebelDot row logo remains pending in Figma; the existing RebelDot artwork is preserved.
+The original October26 Figma updates remain. The combined dark Racing Bulls/RebelDot trusted-row mark is still pending in Figma, so the existing RebelDot mark is preserved.
 
-Contact uses the existing FormSubmit recipient. No real form submission was used for verification.
+Production remains at https://maiac.agency/ on the source repository's main branch. This separate staging snapshot omits production CNAME/sitemap and adds deployment-only noindex/robots safeguards; never merge the hosting repository into production. The source stage branch retains production metadata. No cross-repo automatic sync is configured.
+
+Contact retains the existing FormSubmit recipient. Verification sent no real submissions. Mobile checks use browser simulation; physical-device review remains useful before production.
