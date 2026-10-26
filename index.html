@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Maiac | Branding, marketing and AI enablement</title>
+  <meta name="description" content="Branding, marketing and AI enablement for the companies building what’s next. Maiac’s consultants help your team move routine work onto AI, and our creatives and performance marketers make and run the campaigns with you.">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Select the enhanced header before first paint; script failure restores native links. -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Canonical and social metadata for Maiac's public domain. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Maiac | Branding, marketing and AI enablement">
+  <meta property="og:description" content="Branding, marketing and AI enablement for the companies building what’s next.">
+  <link rel="canonical" href="https://maiac.agency/">
+  <meta property="og:url" content="https://maiac.agency/">
+  <meta property="og:image" content="https://maiac.agency/assets/img/waves-1200.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://maiac.agency/#organization",
+    "name": "Maiac",
+    "url": "https://maiac.agency/",
+    "description": "Branding, marketing and AI enablement for the companies building what’s next.",
+    "email": "andreea@maiac.agency"
+  }
+  </script>
+
+  <link rel="preload" href="assets/fonts/hanken-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/hanken-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/maiac-logo.svg" as="image" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/main.css?v=4c22567e0f5b">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" sizes="180x180">
+  <script src="assets/js/main.js?v=e72f4cf0184f" defer onerror="document.documentElement.classList.remove('js')"></script>
+  <script src="assets/js/contact.js?v=330ac5587a06" defer></script>
+  <script src="assets/js/work-cursor.js?v=905b7ba4cbd6" defer></script>
+</head>
+<body>
+  <!-- Decorative first-visit introduction. The page stays in flow and usable underneath. -->
+  <div class="site-loader" data-site-loader aria-hidden="true" hidden>
+    <div class="site-loader__cover"></div>
+    <div class="site-loader__slot"><img class="site-loader__logo" src="assets/img/maiac-logo.svg" alt="" width="87" height="30"></div>
+  </div>
+  <script>
+    (() => {
+      const loader = document.querySelector('[data-site-loader]');
+      let watchdog;
+      let started = false, finished = false;
+      const listeners = [];
+      const finish = () => {
+        finished = true;
+        loader.hidden = true;
+        clearTimeout(watchdog);
+        listeners.splice(0).forEach(remove => remove());
+      };
+      const on = (target, event, handler, options) => {
+        target.addEventListener(event, handler, options);
+        listeners.push(() => target.removeEventListener(event, handler, options));
+      };
+      try {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        const replay = new URLSearchParams(location.search).get('intro') === 'replay';
+        if (location.hash || navigation?.type === 'back_forward') return;
+        try { if (!replay && sessionStorage.getItem('maiac:intro-played')) return; } catch (_) {}
+        const start = () => {
+          if (started || finished || document.hidden) return;
+          try {
+            if (location.hash) { finish(); return; }
+            // Without the matching stylesheet, leave the default-hidden layer alone.
+            if (getComputedStyle(loader).getPropertyValue('--intro-ready').trim() !== '1') { finish(); return; }
+            const logo = loader.querySelector('img');
+            if (logo.complete && !logo.naturalWidth) { finish(); return; }
+            // Independent of main.js, fonts and image loading; CSS also ends the cover.
+            watchdog = setTimeout(finish, 1800);
+            on(logo, 'error', finish);
+            on(loader, 'animationend', event => { if (event.animationName === 'intro-cover') finish(); });
+            ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(event => on(document, event, finish, { capture: true, passive: true }));
+            started = true;
+            loader.hidden = false;
+            try { sessionStorage.setItem('maiac:intro-played', 'true'); } catch (_) {}
+          } catch (_) { finish(); }
+        };
+        on(window, 'pagehide', finish);
+        // Background-opened previews begin when seen, rather than silently skipping.
+        on(document, 'visibilitychange', () => { if (document.hidden) { if (started) finish(); } else start(); });
+        start();
+      } catch (_) { finish(); }
+    })();
+  </script>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- One persistent transparent header. Desktop sections remain vertical while scrolling. -->
+  <header class="site-header" data-site-header>
+    <nav class="site-header__nav" aria-label="Sections">
+      <ul class="site-header__list">
+        <li><a href="#approach" data-nav-link>Approach</a></li>
+        <li><a href="#work" data-nav-link>Work</a></li>
+        <li><a href="#services" data-nav-link>Services</a></li>
+        <li><a href="#why-maiac" data-nav-link>Why Maiac</a></li>
+        <li><a href="#team" data-nav-link>Team</a></li>
+        <li><a href="#contact" data-nav-link>Contact</a></li>
+      </ul>
+    </nav>
+    <a class="site-header__logo" href="#top"><img src="assets/img/maiac-logo.svg" alt="Maiac" width="87" height="30"></a>
+    <div class="site-header__actions">
+      <a class="text-link" href="#contact" data-cta>Book a consultancy session</a>
+      <button class="menu-toggle site-header__toggle" type="button" data-menu-open aria-controls="menu" aria-expanded="false">Menu</button>
+    </div>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <dialog class="menu" id="menu" data-menu aria-label="Site navigation">
+    <div class="menu__head">
+      <img src="assets/img/maiac-logo.svg" alt="" width="87" height="30">
+      <button class="menu-toggle" type="button" data-menu-close autofocus>Close</button>
+    </div>
+    <nav aria-label="Sections">
+      <ul class="menu__list">
+        <li><a href="#approach" data-nav-link data-menu-link>Approach</a></li>
+        <li><a href="#work" data-nav-link data-menu-link>Work</a></li>
+        <li><a href="#services" data-nav-link data-menu-link>Services</a></li>
+        <li><a href="#why-maiac" data-nav-link data-menu-link>Why Maiac</a></li>
+        <li><a href="#team" data-nav-link data-menu-link>Team</a></li>
+        <li><a href="#contact" data-nav-link data-menu-link>Contact</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--primary" href="#contact" data-menu-link data-cta>Book a consultancy session</a>
+  </dialog>
+
+  <div class="page" data-page id="top">
+
+
+    <main id="main" tabindex="-1">
+      <!-- HERO -->
+      <section class="hero container" aria-labelledby="hero-title">
+        <h1 class="hero__title display-xl" id="hero-title">Branding, marketing and AI enablement for the companies building what’s next.</h1>
+        <div class="hero__aside aside-col">
+          <p class="lead">Maiac is a strategic branding, marketing, and AI enablement agency for companies building what’s next with technology. We work with visionary teams in product, tech and leadership and combine strategy, brand and growth marketing to help companies grow using their brand as a true expression of their vision.</p>
+          <a class="btn btn--primary" href="#contact" data-cta>Book a consultancy session</a>
+        </div>
+      </section>
+
+      <div class="hero-image container">
+        <picture>
+          <source type="image/webp" srcset="assets/img/waves-1200.webp 1200w, assets/img/waves-2400.webp 2400w" sizes="(min-width: 1440px) 1312px, (min-width: 450px) 91.1vw, calc(100vw - 40px)">
+          <img src="assets/img/waves-1200.jpg" srcset="assets/img/waves-1200.jpg 1200w, assets/img/waves-2400.jpg 2400w" sizes="(min-width: 1440px) 1312px, (min-width: 450px) 91.1vw, calc(100vw - 40px)" alt="" width="2400" height="1200" decoding="async" fetchpriority="high">
+        </picture>
+      </div>
+
+      <!-- APPROACH: the problem -->
+      <section class="section section--rule" id="approach" aria-labelledby="problem-title" data-section>
+        <div class="container split">
+          <p class="eyebrow split__label">(Where teams get stuck)</p>
+          <div class="split__content stack">
+            <h2 class="display-m" id="problem-title">Teams in most companies we talk to already use AI to get more done every day.</h2>
+            <div class="prose">
+              <p>And while your team is piling on AI marketing use cases, clandestine, uncoordinated implementation becomes expensive and costs teams time on repeatable work.</p>
+              <p>Efficient AI enablement should work as an amplifier for your team, automating repeatable output, freeing time for strategy and creative implementation, and helping your team communicate better without increasing marketing spend. We work alongside your team to identify what can be automated using AI, implement new workflows and set your team on the path to launch your brand into the next era.</p>
+            </div>
+            <a class="btn btn--secondary" href="#contact" data-cta>Let’s look at how your team works with AI.</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPROACH: point of view (dark) -->
+      <section class="section section--dark shift" aria-labelledby="shift-title">
+        <div class="container">
+          <p class="eyebrow eyebrow--dark">(Our point of view)</p>
+          <h2 class="display-l shift__title" id="shift-title">Brand is great leadership<br>made visible.</h2>
+          <div class="aside-col prose prose--dark">
+            <p>Maiac works with high-growth companies to transform, reposition, launch new services and products, scale their marketing and brand efforts and enable their teams to use the latest available technology.</p>
+            <p>Combining multiple areas of expertise, we work with brands at defining moments to build daring, future-looking stories around what they could be.</p>
+            <p hidden>We amplify your creative powerhouse with strategists, designers, copywriters and performance marketers to get your client values and messages in front of your audiences before your competition does.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORK -->
+      <section class="section section--rule" id="work" aria-labelledby="work-title" data-section>
+        <div class="container">
+          <div class="split split--head">
+            <p class="eyebrow split__label">(Selected work)</p>
+            <h2 class="display-m split__content" id="work-title">Work</h2>
+          </div>
+
+          <div class="work-grid">
+            <!-- Each card zooms its own image on hover. TODO(dev): wrap the card in <a class="work-card" href="…"> once case-study pages exist. -->
+            <article class="work-card work-card--feature">
+              <div class="work-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/work-vcarb-1312.webp 1312w, assets/img/work-vcarb-2400.webp 2400w" sizes="(min-width: 1440px) 1312px, (min-width: 450px) 91.1vw, calc(100vw - 40px)">
+                  <img class="work-card__img" src="assets/img/work-vcarb-1312.jpg" srcset="assets/img/work-vcarb-1312.jpg 1312w, assets/img/work-vcarb-2400.jpg 2400w" sizes="(min-width: 1440px) 1312px, (min-width: 450px) 91.1vw, calc(100vw - 40px)" alt="The Maiac crew filming a driver on a karting track for the Rebels at Speed campaign" width="2400" height="1171" loading="lazy" decoding="async">
+                </picture>
+                <picture class="work-card__overlay">
+                  <source type="image/webp" srcset="assets/img/work-vcarb-lockup.webp">
+                  <img src="assets/img/work-vcarb-lockup.png" alt="Visa Cash App RB Formula One Team and RebelDot, technology partner" width="662" height="304" loading="lazy" decoding="async">
+                </picture>
+                <span class="work-label" data-work-label aria-hidden="true"><span>Creative direction, Performance</span><svg viewBox="0 0 9 9" aria-hidden="true"><path d="M0 4.5h8M4.5 1l3.5 3.5L4.5 8" fill="none" stroke="currentColor"/></svg></span>
+              </div>
+              <div class="work-card__caption">
+                <h3 class="work-card__title">Visa Cash App Racing Bulls Formula One Team and RebelDot</h3>
+                <p class="work-card__meta">(Tech consultancy and implementation)</p>
+                <p class="sr-only">Services: Creative direction, Performance</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/work-sync-800.webp 800w, assets/img/work-sync-1600.webp 1600w" sizes="(min-width: 1440px) 644px, (min-width: 768px) calc(45.55vw - 12px), (min-width: 450px) 91.1vw, calc(100vw - 40px)">
+                  <img class="work-card__img" src="assets/img/work-sync-800.jpg" srcset="assets/img/work-sync-800.jpg 800w, assets/img/work-sync-1600.jpg 1600w" sizes="(min-width: 1440px) 644px, (min-width: 768px) calc(45.55vw - 12px), (min-width: 450px) 91.1vw, calc(100vw - 40px)" alt="Sync brand identity" width="1600" height="1200" loading="lazy" decoding="async">
+                </picture>
+                <span class="work-label" data-work-label aria-hidden="true"><span>Brand identity, Growth marketing</span><svg viewBox="0 0 9 9" aria-hidden="true"><path d="M0 4.5h8M4.5 1l3.5 3.5L4.5 8" fill="none" stroke="currentColor"/></svg></span>
+              </div>
+              <div class="work-card__caption">
+                <h3 class="work-card__title">Sync</h3>
+                <p class="work-card__meta">(SAP consultancy and implementation)</p>
+                <p class="sr-only">Services: Brand identity, Growth marketing</p>
+              </div>
+            </article>
+
+            <article class="work-card">
+              <div class="work-card__media">
+                <picture>
+                  <source type="image/webp" srcset="assets/img/work-temedica-644.webp 644w, assets/img/work-temedica-1288.webp 1288w" sizes="(min-width: 1440px) 644px, (min-width: 768px) calc(45.55vw - 12px), (min-width: 450px) 91.1vw, calc(100vw - 40px)">
+                  <img class="work-card__img" src="assets/img/work-temedica-644.jpg" srcset="assets/img/work-temedica-644.jpg 644w, assets/img/work-temedica-1288.jpg 1288w" sizes="(min-width: 1440px) 644px, (min-width: 768px) calc(45.55vw - 12px), (min-width: 450px) 91.1vw, calc(100vw - 40px)" alt="Temedica logo" width="1288" height="966" loading="lazy" decoding="async">
+                </picture>
+                <span class="work-label" data-work-label aria-hidden="true"><span>Demand generation, Performance marketing</span><svg viewBox="0 0 9 9" aria-hidden="true"><path d="M0 4.5h8M4.5 1l3.5 3.5L4.5 8" fill="none" stroke="currentColor"/></svg></span>
+              </div>
+              <div class="work-card__caption">
+                <h3 class="work-card__title">Temedica</h3>
+                <p class="work-card__meta">(AI and data for big pharma)</p>
+                <p class="sr-only">Services: Demand generation, Performance marketing</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section class="section" id="services" aria-labelledby="services-title" data-section>
+        <div class="container">
+          <div class="split split--head">
+            <p class="eyebrow split__label">(Services)</p>
+            <h2 class="display-m split__content" id="services-title">Get more from your marketing.</h2>
+          </div>
+
+          <ol class="services" role="list">
+            <li class="service">
+              <span class="service__num" aria-hidden="true">01</span>
+              <h3 class="service__name">AI and workflow review</h3>
+              <p class="service__desc">We map every recurring task, every AI tool your team already uses and where the time and money go, then show you what AI can take over and what that frees up.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">02</span>
+              <h3 class="service__name">Brand and marketing strategy</h3>
+              <p class="service__desc">We give your team one plan covering which AI uses are worth backing, the shared tools and quality rules, who owns each workflow, and where the time and money it frees should go.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">03</span>
+              <h3 class="service__name">Automation setup</h3>
+              <p class="service__desc">We build the workflows your team will run every day, from asset versions and copy adaptation to briefs and reporting, with your brand rules and approval steps built in, then train each role hands-on and leave written playbooks so your team keeps running and improving them after we step back.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">04</span>
+              <h3 class="service__name">Creative and campaign production</h3>
+              <p class="service__desc">Our strategists, designers and copywriters take campaigns from the first idea to finished assets, using the same workflows we set up with your team.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">05</span>
+              <h3 class="service__name">Performance marketing</h3>
+              <p class="service__desc">Our performance team plans, launches and improves your paid campaigns, and shares what the numbers show with the people making the creative.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">06</span>
+              <h3 class="service__name">Answer engine optimisation (AEO)</h3>
+              <p class="service__desc">We structure your site, content and sources so ChatGPT, Perplexity and Google’s AI answers can find your brand, understand what you offer and recommend you when people ask about your category.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">07</span>
+              <h3 class="service__name">Agent-ready websites</h3>
+              <p class="service__desc">We optimise your site so AI agents can read and use it, with clear structure, product and pricing information they can parse, and forms they can complete, so an agent researching or buying on someone’s behalf can choose you.</p>
+            </li>
+            <li class="service">
+              <span class="service__num" aria-hidden="true">08</span>
+              <h3 class="service__name">Ongoing advisory</h3>
+              <p class="service__desc">We meet every month to review spend and output, test the tools worth testing, and check each quarter that your team’s time and budget still sit in the right place.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- WHY MAIAC -->
+      <section class="section section--rule" id="why-maiac" aria-labelledby="why-title" data-section>
+        <div class="container split">
+          <p class="eyebrow split__label">(Why Maiac)</p>
+          <div class="split__content stack">
+            <h2 class="display-m" id="why-title">Maiac means lighthouse: a signal of direction and clarity.</h2>
+            <div class="prose">
+              <p>We want our work to guide visionary teams through the complexity of constant change, helping them move faster and get ahead in shifting markets.</p>
+              <p>Maiac is an agency built for organisations that communicate with vision and purpose, value human craft, and recognise technology’s potential to amplify human creativity.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEAM: horizontal scroller -->
+      <section class="section section--rule team" id="team" aria-labelledby="team-title" data-section>
+        <div class="team__pin" data-team-pin>
+        <div class="container split split--head">
+          <p class="eyebrow split__label">(Maiac team)</p>
+          <h2 class="display-m split__content" id="team-title">Team</h2>
+        </div>
+
+        <div class="team__scroller" data-team-scroller tabindex="0" role="region" aria-label="Team members, scroll horizontally">
+          <ul class="team__track" role="list">
+            <li class="member">
+              <picture>
+                <source type="image/webp" srcset="assets/img/team-andreea-pop-540.webp 540w, assets/img/team-andreea-pop-1080.webp 1080w" sizes="(min-width: 900px) 540px, 78vw">
+                <img class="member__photo" src="assets/img/team-andreea-pop-540.jpg" srcset="assets/img/team-andreea-pop-540.jpg 540w, assets/img/team-andreea-pop-1080.jpg 1080w" sizes="(min-width: 900px) 540px, 78vw" alt="Andreea Pop" width="1080" height="1440" loading="lazy" decoding="async" draggable="false">
+              </picture>
+              <h3 class="member__name">Andreea Pop</h3>
+              <p class="member__role">Co-founder, Head of Brand Strategy</p>
+            </li>
+            <li class="member">
+              <picture>
+                <source type="image/webp" srcset="assets/img/team-andrei-temneanu-540.webp 540w, assets/img/team-andrei-temneanu-1080.webp 1080w" sizes="(min-width: 900px) 540px, 78vw">
+                <img class="member__photo" src="assets/img/team-andrei-temneanu-540.jpg" srcset="assets/img/team-andrei-temneanu-540.jpg 540w, assets/img/team-andrei-temneanu-1080.jpg 1080w" sizes="(min-width: 900px) 540px, 78vw" alt="Andrei Temneanu" width="1080" height="1440" loading="lazy" decoding="async" draggable="false">
+              </picture>
+              <h3 class="member__name">Andrei Temneanu</h3>
+              <p class="member__role">Co-founder, Head of Performance and Automation</p>
+            </li>
+            <li class="member">
+              <picture>
+                <source type="image/webp" srcset="assets/img/team-timeea-bara-540.webp 540w, assets/img/team-timeea-bara-1080.webp 1080w" sizes="(min-width: 900px) 540px, 78vw">
+                <img class="member__photo" src="assets/img/team-timeea-bara-540.jpg" srcset="assets/img/team-timeea-bara-540.jpg 540w, assets/img/team-timeea-bara-1080.jpg 1080w" sizes="(min-width: 900px) 540px, 78vw" alt="Timeea Bara" width="1080" height="1440" loading="lazy" decoding="async" draggable="false">
+              </picture>
+              <h3 class="member__name">Timeea Bara</h3>
+              <p class="member__role">Content Strategist</p>
+            </li>
+            <li class="member">
+              <picture class="member__portrait--valentin">
+                <source type="image/webp" srcset="assets/img/team-valentin-agafitei-540.webp 540w, assets/img/team-valentin-agafitei-1037.webp 1037w" sizes="(min-width: 900px) 540px, 78vw">
+                <img class="member__photo" src="assets/img/team-valentin-agafitei-540.jpg" srcset="assets/img/team-valentin-agafitei-540.jpg 540w, assets/img/team-valentin-agafitei-1037.jpg 1037w" sizes="(min-width: 900px) 540px, 78vw" alt="Valentin Agafitei" width="1037" height="1383" loading="lazy" decoding="async" draggable="false">
+              </picture>
+              <h3 class="member__name">Valentin Agafitei</h3>
+              <p class="member__role">Designer</p>
+            </li>
+          </ul>
+        </div>
+        </div>
+      </section>
+
+      <!-- TRUSTED BY -->
+      <section class="trusted section--rule" aria-label="Trusted by">
+        <div class="container trusted__content">
+          <p class="eyebrow">(Trusted by)</p>
+          <ul class="trusted__logos" role="list">
+            <li><img src="assets/img/client-temedica.svg" alt="Temedica" width="148" height="29" loading="lazy"></li>
+            <li><img src="assets/img/client-sync.svg" alt="Sync" width="103" height="41" loading="lazy"></li>
+            <li><img src="assets/img/client-rebeldot.svg" alt="RebelDot" width="159" height="27" loading="lazy"></li>
+            <li><img src="assets/img/client-ivox.svg" alt="iVOX" width="84" height="28" loading="lazy"></li>
+            <li><img class="trusted__logo--bonsai" src="assets/img/client-bonsai-labs.svg" alt="Bonsai Labs" width="194" height="18" loading="lazy"></li>
+            <li><img class="trusted__logo--mtd" src="assets/img/client-mtd-technology.svg" alt="MTD Technology" width="137" height="32" loading="lazy"></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section class="section section--rule contact" id="contact" aria-labelledby="contact-title" data-section>
+        <div class="container">
+          <p class="eyebrow">(Start here)</p>
+          <h2 class="display-xl contact__title" id="contact-title">Start with a<br>conversation.</h2>
+          <div class="aside-col contact__col">
+            <p class="lead">We want to understand where you are and where you’re going, then build a strategy that gets you there.</p>
+
+            <!-- FormSubmit requires one-time confirmation by the receiving inbox. -->
+            <form class="form" data-contact-form data-endpoint="https://formsubmit.co/ajax/andreea@maiac.agency" data-contact-email="andreea@maiac.agency" action="https://formsubmit.co/andreea@maiac.agency" method="post">
+              <input type="hidden" name="_subject" value="New Maiac consultancy enquiry">
+              <input type="hidden" name="_template" value="table">
+              <div class="field">
+                <label class="field__label" for="f-name">Name</label>
+                <input class="field__input" id="f-name" name="name" type="text" autocomplete="name" placeholder="Your full name" required>
+                <p class="field__error" id="f-name-error" hidden>Please add your name.</p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-email">Work email</label>
+                <input class="field__input" id="f-email" name="email" type="email" autocomplete="email" placeholder="name@company.com" required>
+                <p class="field__error" id="f-email-error" hidden>Please add a valid work email.</p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-company">Company</label>
+                <input class="field__input" id="f-company" name="company" type="text" autocomplete="organization" placeholder="Where you work and your role" required>
+                <p class="field__error" id="f-company-error" hidden>Please tell us where you work.</p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="f-message">What would you like to talk about? (optional)</label>
+                <textarea class="field__input field__input--area" id="f-message" name="message" rows="3" placeholder="A few lines on how we can help you"></textarea>
+              </div>
+              <!-- FormSubmit also checks this honeypot on the server. -->
+              <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input id="f-website" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
+              <div class="form__submit">
+                <button class="btn btn--primary" type="submit">Book a consultancy session</button>
+                <p class="form__note">We only use these details to get back to you.</p>
+                <!-- Launch: link the data-use note when the real policy URL is supplied. -->
+                <noscript><p class="form__note">You can also email <a href="mailto:andreea@maiac.agency">andreea@maiac.agency</a>.</p></noscript>
+                <p class="form__copyright">&copy; <span data-year>2026</span> Maiac</p>
+                <p class="form__status" data-form-status role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- FOOTER: sits fixed behind the page and is uncovered as the page scrolls away (AREA 17-style curtain reveal). -->
+  <footer class="site-footer" data-footer aria-hidden="true">
+    <div class="site-footer__mark" data-footer-mark aria-hidden="true">
+      <!-- The page uncovers a persistent Ma accordion; fine-pointer motion adds a bounded local distortion. -->
+      <img class="site-footer__mark-img" src="assets/img/maiac-ma-mark.svg?v=873f937bc1e2" alt="" width="847" height="537">
+    </div>
+
+  </footer>
+</body>
+</html>
