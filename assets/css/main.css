@@ -396,7 +396,12 @@ body.menu-open::after {
 }
 
 /* Team: horizontal scroller. Starts on the page gutter, bleeds off the right edge. */
-.team { padding-bottom: var(--section-pad); }
+.team {
+  --team-card-base: 648px;
+  --team-card-size: var(--team-card-base);
+  padding-bottom: var(--section-pad);
+}
+@media (max-width: 899px) { .team { --team-card-base: 93.6vw; } }
 .team__scroller {
   overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -410,10 +415,10 @@ body.menu-open::after {
 .team__scroller.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
 .team .team__track {
   display: flex; gap: 24px; width: max-content;
-  padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)) var(--gutter);
+  padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2))
+    min(var(--gutter), max(0px, calc(100vw - var(--team-card-size) - var(--gutter))));
 }
-.member { flex: none; width: 540px; scroll-snap-align: start; }
-@media (max-width: 899px) { .member { width: 78vw; } }
+.member { flex: none; inline-size: var(--team-card-size); scroll-snap-align: start; }
 .member__photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee; pointer-events: none; }
 .member__portrait--valentin { overflow: clip; }
 .member__portrait--valentin .member__photo { transform: scale(1.2); transform-origin: 50% 87%; }
@@ -422,7 +427,7 @@ body.menu-open::after {
 
 /* Page scroll drives the row only after the enhancement measures a fitting stage. */
 .js .team.is-scroll-driven {
-  --team-card-base: 540px;
+  --team-card-size: min(var(--team-card-base), var(--team-card-fit, 648px));
   padding-block: 0;
   block-size: calc(100svh + var(--team-travel, 0px));
 }
@@ -441,8 +446,8 @@ body.menu-open::after {
   touch-action: pan-y pinch-zoom;
   cursor: auto;
 }
-.js .is-scroll-driven .member { inline-size: min(var(--team-card-base), var(--team-card-fit, 540px)); }
-@media (max-width: 899px) { .js .team.is-scroll-driven { --team-card-base: 78vw; } }
+/* Larger frames keep captions on screen when the pinned stage limits photo height. */
+.js .is-scroll-driven .member__photo { max-block-size: var(--team-photo-fit, none); }
 
 /* Trusted by */
 .trusted { padding-block: 64px; background: var(--paper); }
