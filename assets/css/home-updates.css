@@ -1,0 +1,92 @@
+/* Landing frame 60:492, Latest updates 108:438 and development note 108:459.
+   These native links and their content remain usable without JavaScript. */
+.home-updates {
+  display: grid;
+  grid-template-columns:
+    [full-width-start] minmax(var(--gutter), 1fr)
+    [content-start] min(var(--max), calc(100% - 2 * var(--gutter))) [content-end]
+    minmax(var(--gutter), 1fr) [full-width-end];
+  row-gap: clamp(48px, 6.666667vw, 96px);
+}
+
+.home-updates > * { grid-column: content; min-inline-size: 0; }
+.home-updates__heading { margin: 0; }
+.home-updates__list { display: grid; gap: clamp(24px, 3.333334vw, 48px); }
+
+.home-update {
+  position: relative;
+  display: grid;
+  gap: 24px;
+  align-items: start;
+  padding-block: clamp(32px, 3.333334vw, 48px);
+  border-block-start: 1px solid var(--rule);
+}
+
+.home-update > * { min-inline-size: 0; }
+.home-update__category { margin: 0; font-size: 16px; line-height: 1.5; }
+.home-update__text { display: grid; gap: 24px; }
+.home-update__title {
+  margin: 0;
+  font-size: clamp(1.75rem, 1.3875rem + 0.958334vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  overflow-wrap: break-word;
+}
+
+.home-update__link {
+  justify-self: start;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+/* The link covers its article; its own label stays concise for assistive technology. */
+.home-update__link::after { content: ""; position: absolute; inset: 0; }
+.home-update__link:focus-visible { outline: 2px solid transparent; }
+.home-update:has(.home-update__link:focus-visible) {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+.home-update:active { background-color: oklch(97% 0 none); }
+
+.home-update__image {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media (min-width: 900px) {
+  .home-update {
+    grid-template-columns: minmax(8rem, 312fr) minmax(0, 564fr) minmax(15rem, 340fr);
+    column-gap: clamp(24px, 3.333334vw, 48px);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .home-update:hover .home-update__link { color: oklch(35% 0 none); }
+}
+
+/* Note108:459: a slight entrance fade/slide, with readable content at every frame.
+   Unsupported timelines and reduced motion retain the static layout above. */
+@supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
+  @media (prefers-reduced-motion: no-preference) {
+    .home-update {
+      animation: home-update-enter var(--dur-fast, 200ms) var(--ease-out, ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    .home-update:focus-within { animation: none; }
+
+    @keyframes home-update-enter {
+      from { opacity: 0.8; translate: 0 16px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+  }
+}
