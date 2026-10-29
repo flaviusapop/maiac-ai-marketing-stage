@@ -47,6 +47,8 @@
   --section-pad: clamp(72px, 6vw + 33.6px, 120px);
   --section-pad-l: clamp(88px, 7vw + 43.2px, 144px);
   --aside: 600px;
+  --radius-media: 10px;
+  --radius-control: 6px;
 
   /* motion */
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -190,7 +192,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: 58px; padding: 17px 27px;
-  border: 1px solid var(--ink); border-radius: 0;
+  border: 1px solid var(--ink); border-radius: var(--radius-control);
   font-size: 17px; font-weight: 500; line-height: 1.3; text-align: left;
   cursor: pointer;
   transition: background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
@@ -216,7 +218,7 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .menu-toggle {
   display: none;
-  background: none; border: 1px solid var(--ink); padding: 8px 14px; min-height: 40px;
+  background: none; border: 1px solid var(--ink); border-radius: var(--radius-control); padding: 8px 14px; min-height: 40px;
   min-inline-size: calc(5ch + 30px); justify-content: center;
   font-size: 15px; font-weight: 500; cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -314,7 +316,7 @@ body.menu-open::after {
 .hero__title { max-width: 1260px; }
 .hero__aside { display: grid; gap: 40px; justify-items: start; }
 .hero-image { padding-bottom: var(--section-pad); }
-.hero-image img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; }
+.hero-image img { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--radius-media); }
 
 /* Point of view */
 .shift .container { display: grid; gap: clamp(40px, 5vw, 72px); }
@@ -327,7 +329,7 @@ body.menu-open::after {
   .work-card--feature { grid-column: 1 / -1; }
 }
 .work-card { display: grid; gap: 20px; align-content: start; }
-.work-card__media { position: relative; overflow: clip; background: var(--ink); aspect-ratio: 4 / 3; }
+.work-card__media { position: relative; overflow: clip; background: var(--ink); aspect-ratio: 4 / 3; border-radius: var(--radius-media); }
 .work-card--feature .work-card__media { aspect-ratio: 1312 / 640; }
 .work-card__media picture:first-child, .work-card__img { width: 100%; height: 100%; }
 .work-card__img {
@@ -419,6 +421,7 @@ body.menu-open::after {
     min(var(--gutter), max(0px, calc(100vw - var(--team-card-size) - var(--gutter))));
 }
 .member { flex: none; inline-size: var(--team-card-size); scroll-snap-align: start; }
+.member > picture { border-radius: var(--radius-media); overflow: clip; }
 .member__photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee; pointer-events: none; }
 .member__portrait--valentin { overflow: clip; }
 .member__portrait--valentin .member__photo { transform: scale(1.2); transform-origin: 50% 87%; }
