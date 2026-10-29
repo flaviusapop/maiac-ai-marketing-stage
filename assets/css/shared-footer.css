@@ -1,0 +1,52 @@
+/* Homepage curtain footer, copied from main.css for pages that keep their own
+   stylesheet. main.js owns the behavior; keep these rules aligned with main.css. */
+:root { --footer-base: 680px; }
+body { background: var(--ink); } /* matches the footer so the reveal never flashes white */
+.site-footer :focus-visible { outline-color: var(--paper); }
+
+/* ---------- Page shell (sits above the fixed footer) ---------- */
+/* The sticky header stays in body flow outside the curtain, so no reserve is added. */
+.page {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  margin-block-end: 0;
+  padding-block-start: 0;
+}
+.footer-reveal .page { margin-block-end: var(--footer-h); }
+.js:not(.no-footer-reveal) .page { margin-block-end: var(--footer-h, var(--footer-base)); }
+
+/* ---------- Persistent accordion behind a native curtain ---------- */
+.site-footer {
+  position: relative; z-index: 0;
+  min-block-size: 680px; block-size: auto;
+  background: var(--ink); color: var(--paper);
+  overflow: clip;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.footer-reveal .site-footer { position: fixed; inset-inline: 0; inset-block-end: 0; }
+.js:not(.no-footer-reveal) .site-footer { position: fixed; inset-inline: 0; inset-block-end: 0; }
+/* The footer contains only the approved artwork and its deformation surface. */
+.site-footer__mark {
+  position: absolute; inset-inline: 0; inset-block: 0;
+  inline-size: 100%; block-size: 100%;
+  pointer-events: none; overflow: clip;
+}
+.site-footer__mark-img, .site-footer__mark-copy {
+  position: absolute; inset-block: 0;
+  block-size: 100%; max-inline-size: none;
+}
+.site-footer__mark-img {
+  inset-inline-end: -14vw; inline-size: auto; aspect-ratio: 847 / 537;
+}
+.site-footer__mark.is-accordion > img {
+  inset-inline: 0 auto; transform-origin: 0 0;
+}
+.site-footer__mark.is-flowing > img { visibility: hidden; }
+.site-footer__flow { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; display: none; }
+.site-footer__mark.is-flowing .site-footer__flow { display: block; }
+
+@media (max-width: 899px) {
+  :root { --footer-base: 560px; }
+  .site-footer { min-block-size: 560px; }
+}

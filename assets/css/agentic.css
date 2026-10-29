@@ -1,4 +1,3 @@
-/* Frame 69:152. Standalone styles: no animated homepage footer dependency. */
 @font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/hanken-grotesk-latin-400-normal.woff2') format('woff2'); }
 @font-face { font-family: "Hanken Grotesk"; font-style: normal; font-weight: 500; font-display: swap; src: url('../fonts/hanken-grotesk-latin-500-normal.woff2') format('woff2'); }
 :root {
@@ -156,8 +155,6 @@ body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inli
 .form__note { font-size: 14px; line-height: 1.5; color: var(--muted); margin-block-start: 16px; }
 .form__copyright { margin-block-start: 20px; font-size: 16px; line-height: 1.4; }
 .form__status a, .form__note a { text-decoration: underline; }
-.static-footer { position: relative; overflow: clip; block-size: clamp(350px, 47.2222vw, 680px); background: var(--ink); }
-.static-footer img { inline-size: 100%; block-size: 100%; object-fit: cover; }
 .portrait-cursor { display: none; position: fixed; inset-block-start: 0; inset-inline-start: 0; z-index: 100; inline-size: 96px; block-size: 128px; object-fit: cover; border-radius: 10px; pointer-events: none; opacity: 0; transform: translate(var(--cursor-x, 0px), var(--cursor-y, 0px)) scale(.8); transform-origin: top left; }
 @media (hover: hover) and (pointer: fine) {
   .btn--primary:hover { background: var(--paper); color: var(--ink); }
@@ -208,5 +205,4 @@ body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inli
   .testimonial-controls button { inline-size: 44px; block-size: 44px; }
   .contact { row-gap: 48px; }
   .contact__col { inline-size: 100%; }
-  .static-footer img { object-position: 65% center; }
 }

@@ -15,10 +15,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preload" href="../assets/fonts/hanken-grotesk-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/hanken-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../assets/css/agentic.css?v=7f7e791c9cff">
+  <link rel="stylesheet" href="../assets/css/agentic.css?v=8e09a044df54">
+  <link rel="stylesheet" href="../assets/css/shared-footer.css?v=520964b2fa90">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png" sizes="180x180">
-  <script src="../assets/js/agentic.js?v=285685fe3c8f" defer></script>
+  <script src="../assets/js/main.js?v=78e90d283152" defer></script>
+  <script src="../assets/js/agentic.js?v=f80193bcdf45" defer></script>
   <script src="../assets/js/contact.js?v=42da1c44f830" defer></script>
   <meta name="robots" content="noindex, nofollow">
 </head>
@@ -34,6 +36,7 @@
     <nav aria-label="Sections"><ul class="menu__list"><li><a href="#why" data-nav-link>Why</a></li><li><a href="#what-we-do" data-nav-link>What we do</a></li><li><a href="#platforms" data-nav-link>Platforms</a></li><li><a href="#contact" data-nav-link>Contact</a></li></ul></nav>
     <a class="btn btn--primary" href="#contact" data-cta>Book a consultancy session</a>
   </dialog>
+  <div class="page" data-page>
   <main id="main" tabindex="-1">
     <section class="hero content-grid" aria-labelledby="hero-title">
       <div class="hero__copy"><p class="hero__eyebrow">Capabilities</p><h1 id="hero-title">Agentic website management pod</h1><p class="hero__description">We run your website, from content automation to new pages and assets, with agents doing the routine work and our senior team in the loop.</p><a class="btn btn--primary" href="#contact" data-cta>Book a consultancy session</a></div>
@@ -123,11 +126,19 @@
           <div class="hp" aria-hidden="true"><label for="f-honey">Website</label><input id="f-honey" name="_honey" type="text" tabindex="-1" autocomplete="off"></div>
           <button class="btn btn--primary" type="submit">Book a consultancy session</button>
         </div>
-        <p class="form__status" data-form-status role="status" aria-live="polite" aria-atomic="true"></p><p class="form__note">We only use these details to get back to you.</p><noscript><p class="form__note">You can also email <a href="mailto:andreea@maiac.agency">andreea@maiac.agency</a>.</p></noscript><p class="form__copyright">© 2026 Maiac</p>
+        <p class="form__status" data-form-status role="status" aria-live="polite" aria-atomic="true"></p><p class="form__note">We only use these details to get back to you.</p><noscript><p class="form__note">You can also email <a href="mailto:andreea@maiac.agency">andreea@maiac.agency</a>.</p></noscript><p class="form__copyright">© <span data-year>2026</span> Maiac</p>
       </form>
     </div></section>
   </main>
-  <footer class="static-footer" aria-hidden="true"><img src="../assets/img/agentic-footer.svg" alt="" width="1440" height="680" loading="lazy"></footer>
+  </div>
+
+  <!-- Shared homepage footer: native page curtain with bounded direct interaction. -->
+  <footer class="site-footer" data-footer aria-hidden="true">
+    <div class="site-footer__mark" data-footer-mark aria-hidden="true">
+      <!-- The page uncovers a persistent Ma accordion; fine-pointer motion adds a bounded local distortion. -->
+      <img class="site-footer__mark-img" src="../assets/img/maiac-ma-mark.svg?v=873f937bc1e2" alt="" width="847" height="537">
+    </div>
+  </footer>
   <img class="portrait-cursor" data-portrait-cursor src="../assets/img/agentic-andreea-cursor.png" alt="" aria-hidden="true" width="96" height="128" hidden>
 </body>
 </html>
