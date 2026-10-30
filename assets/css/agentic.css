@@ -5,11 +5,11 @@
   --signal: #f15c2a; --sky: #c0d5eb; --error: #b42318; --muted: #5e5e5e;
   --gutter: clamp(20px, 4.4444vw, 64px); --content: 1312px;
   --section-space: clamp(72px, 8.3333vw, 120px); --header-h: 134px;
-  --display-m: clamp(2rem, 1.35rem + 2.6667vw, 3.75rem);
-  --display-l: clamp(2.75rem, 1.25rem + 5.2778vw, 6rem);
-  --display-xl: clamp(3rem, 1.1rem + 7.3889vw, 7.75rem);
-  --body: clamp(1.0625rem, .95rem + .4722vw, 1.375rem);
-  --lead: clamp(1.1875rem, 1.05rem + .5vw, 1.5rem);
+  --display-m: clamp(2rem, 1.4147rem + 2.5948vw, 3.75rem);
+  --display-l: clamp(2.5rem, 1.314rem + 5.2067vw, 6rem);
+  --display-xl: clamp(3rem, 1.388rem + 7.069vw, 7.75rem);
+  --body: clamp(1.0625rem, .98rem + .438889vw, 1.375rem);
+  --lead: clamp(1.1875rem, 1.05rem + .6vw, 1.5rem);
   --logo-size: 150px; --ease-out: cubic-bezier(.22,.61,.36,1);
   --dur-menu-in: 180ms; --dur-menu-out: 140ms;
   font-synthesis: none; -webkit-text-size-adjust: 100%; overflow-wrap: break-word;
@@ -59,7 +59,7 @@ img, svg { display: block; max-inline-size: 100%; block-size: auto; }
 .menu .btn { margin-block-start: auto; flex: none; }
 html.menu-open, body.menu-open { overflow: hidden; }
 body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inline-end: 0; inline-size: var(--menu-page-scrollbar, 0px); background: var(--paper); z-index: 59; pointer-events: none; }
-.hero { padding-block: clamp(88px, 13.8889vw, 200px) var(--section-space); }
+.hero { padding-block: max(clamp(88px, 13.8889vw, 200px), var(--header-reserve)) var(--section-space); }
 .hero__copy { max-inline-size: 100%; }
 .hero__eyebrow, .hero h1 { max-inline-size: 100%; font-size: var(--display-m); line-height: 1.0666667; letter-spacing: -.025em; }
 .hero__eyebrow { color: var(--placeholder); }
@@ -69,7 +69,7 @@ body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inli
 .hero__image { inline-size: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: 10px; margin-block-start: clamp(72px, 11.1111vw, 160px); }
 .problem { padding-block: var(--section-space); }
 .problem__copy { margin-inline-start: 392px; }
-.problem h2, .offset-title, .soft-cta h2 { font-size: var(--display-m); line-height: 1.0666667; }
+.problem h2, .offset-title, .soft-cta h2 { font-size: var(--display-m); line-height: 1.05; }
 .prose { display: grid; gap: 32px; }
 .problem .prose { margin-block-start: 32px; max-inline-size: 800px; }
 .point-of-view { padding-block: clamp(88px, 10vw, 144px); background: var(--ink); color: var(--paper); row-gap: 80px; }
@@ -136,8 +136,8 @@ body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inli
 .testimonial-controls button:focus-visible { outline-color: currentColor; }
 .testimonial-controls button:active { background: color-mix(in srgb, currentColor 30%, transparent); }
 .testimonial-controls svg { inline-size: 100%; fill: none; stroke: currentColor; stroke-width: 1.25; }
-.contact { padding-block: clamp(88px, 10vw, 144px); row-gap: 72px; }
-.contact h2 { font-size: var(--display-xl); line-height: 1; max-inline-size: 1000px; }
+.contact { padding-block: clamp(88px, 10vw, 144px); row-gap: clamp(32px, 4.5vw, 64px); }
+.contact h2 { font-size: var(--display-xl); line-height: .98; max-inline-size: 1000px; }
 .contact__col { justify-self: end; inline-size: min(100%, 600px); }
 .contact__intro { font-size: var(--lead); line-height: 1.4; margin-block-end: 40px; }
 [data-form-fields] { display: grid; gap: 32px; }
@@ -145,7 +145,6 @@ body.menu-open::after { content: ""; position: fixed; inset-block: 0; inset-inli
 .field__label { font-size: 15px; line-height: 1.4; color: var(--muted); }
 .field__input { inline-size: 100%; min-block-size: 44px; padding-block: 10px; padding-inline: 0; border: 0; border-block-end: 1px solid var(--ink); border-radius: 0; background: transparent; font-size: 20px; line-height: 1.4; }
 .field__input::placeholder { opacity: 1; color: var(--muted); }
-.field__input:focus-visible { outline-offset: 4px; }
 .field__input--area { min-block-size: 101px; resize: vertical; text-wrap: stable; }
 .field.is-invalid .field__input { border-color: var(--error); }
 .field__error { font-size: 14px; color: var(--error); }

@@ -136,14 +136,6 @@
           describeError(entry.input, entry.error, false);
         });
         announce('Thank you. We’ll get back to you soon.');
-        // The service page opts into a confirmation replacing its input area.
-        // The homepage retains its existing reset-and-continue behavior.
-        if (form.hasAttribute('data-success-replace')) {
-          const inputArea = form.querySelector('[data-form-fields]');
-          if (inputArea) inputArea.hidden = true;
-          status.tabIndex = -1;
-          status.focus({ preventScroll: true });
-        }
       } catch (error) {
         if (disposed) return;
         announceFailure(timedOut
