@@ -1,6 +1,6 @@
 /* Shared interaction primitives. Keep page-specific composition in each page sheet. */
 :root {
-  --header-reserve: 11rem;
+  --header-reserve: 11.125rem;
   --header-h: var(--header-reserve);
   /* Service's established feedback scale is an explicit exception to the body token. */
   --form-status-size: clamp(1.0625rem, .95rem + .4722vw, 1.375rem);
@@ -30,6 +30,7 @@
 .site-header a, .site-header button { pointer-events: auto; }
 .site-header :focus-visible { outline-color: currentColor; }
 .site-header__logo img { filter: brightness(0) invert(1); }
+.site-header__list { line-height: 20px; }
 .site-header .menu-toggle { border-color: currentColor; }
 .site-header .menu-toggle:active { background: #fff; color: var(--ink); }
 
@@ -51,6 +52,7 @@
 
 /* Homepage CTA system, including finite loading, press and reduced-motion behavior. */
 .btn { border-color: var(--ink); }
+.btn--primary, .btn--secondary { line-height: 22.1px; }
 .btn--secondary { background: var(--paper); color: var(--ink); }
 .btn--primary:active { background: var(--paper); color: var(--ink); }
 .btn--secondary:active { background: var(--ink); color: var(--paper); }
@@ -64,6 +66,17 @@
 }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
 
+/* The homepage underline treatment is shared by both pages. */
+.text-link {
+  padding-block-end: 2px;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 320ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { background-size: 100% 1px; text-decoration: none; }
+}
+@media (prefers-reduced-motion: reduce) { .text-link { transition: none; } }
+
 /* Underline fields retain a visible forced-colors fallback. */
 .field__input:focus {
   outline: 2px solid transparent;
@@ -74,6 +87,8 @@
 @media (forced-colors: active) {
   .field__input:focus-visible, .menu-toggle:focus-visible { outline-color: Highlight; }
 }
+
+.field__error { line-height: 21px; }
 
 /* The service feedback rhythm is deliberate: near the action, before privacy text. */
 .form__status { font-size: var(--form-status-size); line-height: 1.5; }

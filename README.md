@@ -1,6 +1,6 @@
 # Maiac staging preview
 
-Source: [maiac-ai-marketing / stage](https://github.com/flaviusapop/maiac-ai-marketing/tree/77646f7f02b8804abee451176170ad191fb43864), commit `77646f7f02b8804abee451176170ad191fb43864`.
+Source: [maiac-ai-marketing / stage](https://github.com/flaviusapop/maiac-ai-marketing/tree/004872b88bf1575df785092556e55bc9057ae661), commit `004872b88bf1575df785092556e55bc9057ae661`.
 
 Preview: https://flaviusapop.github.io/maiac-ai-marketing-stage/
 
