@@ -1,9 +1,13 @@
 # Maiac staging preview
 
-Source: [maiac-ai-marketing / stage](https://github.com/flaviusapop/maiac-ai-marketing/tree/004872b88bf1575df785092556e55bc9057ae661), commit `004872b88bf1575df785092556e55bc9057ae661`.
+Source stage `dbc08ff44f981160043e7dc7a2099fa4b78ea224` in flaviusapop/maiac-ai-marketing.
 
-Preview: https://flaviusapop.github.io/maiac-ai-marketing-stage/
+November 3 Figma homepage change log and supplied Open Graph images.
 
-October 29 Figma landing-page update and Agentic Website Management page. Both pages use the homepage interactive curtain/accordion footer, as subsequently requested by the owner. Production remains on the original repository's main branch at https://maiac.agency/. This independent hosting snapshot adds noindex and blocking robots rules, and excludes the production CNAME and sitemap. Never merge hosting safeguards into production. No automatic synchronization is configured.
+https://flaviusapop.github.io/maiac-ai-marketing-stage/
 
-Staging inputs still pending: descriptions and artwork for WooCommerce, Shopify, Custom and Something else? The public Figma viewer and exports clip these four cards, so the preview retains verified names without invented copy or marks.
+Production main remains `d0a4cee1b0b8ac5459952d56284e6a183f5a7a49` at https://maiac.agency/.
+
+Independent hosting snapshot: all HTML is noindex/nofollow; robots disallows crawling; CNAME and sitemap excluded. Canonicals stay on production; share-image URLs use this preview origin so images resolve before promotion. Never merge hosting-only safeguards into source or production. No automatic cross-repository sync. The historical design-review utility is retained unlinked.
+
+Four previously clipped service platform cards remain a separate pending input. Linnify intentionally retains the supplied legacy category and service labels until the owner confirms replacements.

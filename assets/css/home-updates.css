@@ -1,5 +1,21 @@
-/* Landing frame 60:492, Latest updates 108:438 and development note 108:459.
+/* Homepage frame 199:404; November 3 change log 201:530; updates note 202:530.
    These native links and their content remain usable without JavaScript. */
+
+/* The labels are removed; the original empty 360px column still aligns headings. */
+@media (min-width: 900px) {
+  .split__content { grid-column: 2; }
+}
+
+/* The client row follows the painting directly, without two adjoining section pads. */
+.hero-image:has(+ .trusted) { padding-block-end: 0; }
+.trusted__logos .trusted__logo--linnify { block-size: 28px; }
+
+/* Logo tiles use the supplied white artwork on a single uninterrupted ink field. */
+.work-card__media--logo { display: grid; place-items: center; }
+.work-card__logo { inline-size: min(184px, 70%); block-size: auto; }
+.work-card__overlay { block-size: auto; }
+.work-label { border-radius: var(--radius-control); }
+
 .home-updates {
   display: grid;
   grid-template-columns:
