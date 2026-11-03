@@ -1,8 +1,8 @@
 # Maiac staging preview
 
-Source stage `1bd79e17cf878a9ce4b4833cb30181ed30c643ca` in flaviusapop/maiac-ai-marketing.
+Source stage `1e5aebeea70b992a8a9ee09bae2963bd9e9076ab` in flaviusapop/maiac-ai-marketing.
 
-November 3 Team follow-up: desktop page-driven sticky row, fixed 540 by 720 portraits, native mobile/short-window fallback. Text-only Open Graph images and final orange favicon family retained.
+November 3 Capabilities hero correction: exact native Figma node 69:171 exported at 2x (2624 by 1312), preserving the 2:1 frame and 10px corners. New image fingerprint upgrades returning caches. Latest Team, branding, social images and favicon retained.
 
 https://flaviusapop.github.io/maiac-ai-marketing-stage/
 
