@@ -1,8 +1,8 @@
 # Maiac staging preview
 
-Source stage `10cd1bacfad8d7448d8e7e74b3068f3c6e8b5ac3` in flaviusapop/maiac-ai-marketing.
+Source stage `1bd79e17cf878a9ce4b4833cb30181ed30c643ca` in flaviusapop/maiac-ai-marketing.
 
-November 3 follow-up: fixed Team photos and native scroller, text-only Open Graph images and final orange favicon family.
+November 3 Team follow-up: desktop page-driven sticky row, fixed 540 by 720 portraits, native mobile/short-window fallback. Text-only Open Graph images and final orange favicon family retained.
 
 https://flaviusapop.github.io/maiac-ai-marketing-stage/
 

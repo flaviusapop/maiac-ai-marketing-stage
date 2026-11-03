@@ -197,8 +197,19 @@
       }
     });
     const team = $('[data-team-scroller]');
+    const teamSection = team?.closest('.team'), teamPin = $('[data-team-pin]');
+    let teamPinned = false, teamStart = 0, teamTravel = 0, teamBlock = 0;
+    let teamHeadingTop = null;
+    let measureTeam = () => {}, paintTeam = () => {};
     let pointer = null, wheelTimer = 0, wheelStart = 0;
     if (team) {
+      const clampTeam = left => Math.max(0, Math.min(team.scrollWidth - team.clientWidth, left));
+      const teamPosition = () => teamPinned ? clampTeam(scrollY - teamStart) : team.scrollLeft;
+      const moveTeam = (left, behavior = motion.matches ? 'instant' : 'smooth') => {
+        const target = clampTeam(left);
+        if (teamPinned) window.scrollTo({ top: teamStart + target, behavior });
+        else team.scrollTo({ left: target, behavior });
+      };
       const snapPoints = () => {
         const max = team.scrollWidth - team.clientWidth;
         const origin = team.getBoundingClientRect().left;
@@ -207,15 +218,13 @@
           Math.max(0, Math.min(max, member.getBoundingClientRect().left - origin + team.scrollLeft - padding))), max])].sort((a, b) => a - b);
       };
       const settleTeam = (start, minimum) => {
-        const left = team.scrollLeft, distance = left - start;
+        const left = teamPosition(), distance = left - start;
         const points = snapPoints();
         let target = points.reduce((best, point) => Math.abs(point - left) < Math.abs(best - left) ? point : best, points[0]);
-        // A deliberate short gesture must escape the current card instead of
-        // losing all its movement when mandatory snapping is restored.
         if (distance >= minimum) target = Math.max(target, points.find(point => point > start + 1) ?? points.at(-1));
         else if (distance <= -minimum) target = Math.min(target, points.findLast(point => point < start - 1) ?? 0);
         team.classList.remove('is-dragging', 'is-wheeling');
-        team.scrollTo({ left: target, behavior: motion.matches ? 'instant' : 'smooth' });
+        moveTeam(target);
       };
       const endDrag = event => {
         if (!pointer) return;
@@ -230,7 +239,7 @@
         if (event.pointerType !== 'mouse' || event.button !== 0) return;
         clearTimeout(wheelTimer);
         wheelTimer = 0;
-        pointer = { id: event.pointerId, x: event.clientX, left: team.scrollLeft };
+        pointer = { id: event.pointerId, x: event.clientX, left: teamPosition() };
         team.setPointerCapture(event.pointerId);
         team.focus({ preventScroll: true });
       });
@@ -240,36 +249,101 @@
         if (Math.abs(dx) > 3) {
           team.classList.add('is-dragging');
           team.classList.remove('is-wheeling');
-          team.scrollLeft = pointer.left - dx;
+          moveTeam(pointer.left - dx, 'instant');
           event.preventDefault();
         }
       });
       ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => on(team, type, endDrag));
       on(team, 'dragstart', event => event.preventDefault());
       on(team, 'wheel', event => {
-        // Plain vertical wheel input stays with the page. Horizontal trackpad
-        // input stays native; map Shift + vertical wheel input to this row.
-        if (event.ctrlKey || event.metaKey || event.deltaX !== 0 || !event.shiftKey || !event.deltaY) return;
-        const max = team.scrollWidth - team.clientWidth, left = team.scrollLeft;
-        if ((event.deltaY > 0 && left >= max - 1) || (event.deltaY < 0 && left <= 1) || max <= 1) return;
+        if (event.ctrlKey || event.metaKey) return;
+        // Plain vertical wheel input remains native page scrolling. While pinned,
+        // horizontal trackpad and Shift+wheel input also use that same page position.
+        const delta = teamPinned ? (event.deltaX || (event.shiftKey ? event.deltaY : 0)) :
+          (event.deltaX === 0 && event.shiftKey ? event.deltaY : 0);
+        if (!delta) return;
+        const max = team.scrollWidth - team.clientWidth, left = teamPosition();
+        if ((delta > 0 && left >= max - 1) || (delta < 0 && left <= 1) || max <= 1) return;
         const unit = event.deltaMode === 1 ? parseFloat(getComputedStyle(team).lineHeight) || 20 : event.deltaMode === 2 ? team.clientWidth : 1;
         event.preventDefault();
+        if (teamPinned) { moveTeam(left + delta * unit, 'instant'); return; }
         if (!wheelTimer) wheelStart = left;
         clearTimeout(wheelTimer);
         team.classList.add('is-wheeling');
-        team.scrollLeft = Math.max(0, Math.min(max, left + event.deltaY * unit));
+        team.scrollLeft = Math.max(0, Math.min(max, left + delta * unit));
         wheelTimer = setTimeout(() => { wheelTimer = 0; settleTeam(wheelStart, 12); }, 160);
       }, { passive: false });
       on(team, 'keydown', event => {
         if (event.target !== team || !['ArrowRight', 'ArrowLeft'].includes(event.key) || event.ctrlKey || event.metaKey || event.altKey) return;
         event.preventDefault();
-        const points = snapPoints();
-        // Native page and row positions can each round a fractional CSS pixel.
+        const points = snapPoints(), left = teamPosition();
         const target = event.key === 'ArrowRight'
-          ? points.find(point => point > team.scrollLeft + 2) ?? points.at(-1)
-          : points.findLast(point => point < team.scrollLeft - 2) ?? 0;
-        team.scrollTo({ left: target, behavior: motion.matches ? 'instant' : 'smooth' });
+          ? points.find(point => point > left + 2) ?? points.at(-1)
+          : points.findLast(point => point < left - 2) ?? 0;
+        moveTeam(target);
       });
+      if (teamSection && teamPin) {
+        const resetPin = () => {
+          teamPinned = false;
+          teamSection.classList.remove('is-scroll-driven');
+          ['block-size', '--team-travel', '--team-pin-top'].forEach(name => teamSection.style.removeProperty(name));
+        };
+        measureTeam = () => {
+          const previousStart = teamStart, previousTravel = teamTravel, previousBlock = teamBlock;
+          const wasPinned = teamPinned, y = scrollY;
+          const inRange = wasPinned && y >= previousStart - 1 && y <= previousStart + previousTravel + 1;
+          const afterRange = wasPinned && y > previousStart + previousTravel + 1;
+          const progress = inRange && previousTravel > 0 ? Math.max(0, Math.min(1, (y - previousStart) / previousTravel)) : null;
+          const nativeTravel = Math.max(0, team.scrollWidth - team.clientWidth);
+          const nativeProgress = nativeTravel ? team.scrollLeft / nativeTravel : 0;
+          const visible = teamPin.getBoundingClientRect().bottom > 0 && teamPin.getBoundingClientRect().top < innerHeight;
+          const headingTop = teamHeadingTop ?? teamPin.getBoundingClientRect().top + parseFloat(getComputedStyle(teamPin).paddingTop);
+          const cardHeight = Math.max(...$$('.member', team).map(member => member.getBoundingClientRect().height));
+          const eligible = desktop.matches && innerHeight >= cardHeight + 48 && nativeTravel > 0;
+          if (!eligible) {
+            if (wasPinned) {
+              endDrag(); clearTimeout(wheelTimer); wheelTimer = 0;
+              resetPin();
+              teamBlock = teamSection.getBoundingClientRect().height + parseFloat(getComputedStyle(teamSection).marginBottom);
+              if (progress !== null) {
+                team.scrollLeft = nativeTravel * progress;
+                const newHeadingY = teamPin.getBoundingClientRect().top + scrollY + parseFloat(getComputedStyle(teamPin).paddingTop);
+                window.scrollTo({ top: newHeadingY - headingTop, behavior: 'instant' });
+              } else if (afterRange) window.scrollTo({ top: y + teamBlock - previousBlock, behavior: 'instant' });
+            }
+            teamHeadingTop = null;
+            return;
+          }
+          teamSection.classList.add('is-scroll-driven');
+          // Measure the natural wrapper only. Never write a member/photo dimension.
+          const pinHeight = teamPin.getBoundingClientRect().height;
+          const stickyTop = Math.min(header.getBoundingClientRect().height + 24, innerHeight - pinHeight - 24);
+          const style = getComputedStyle(teamSection);
+          const borders = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+          teamTravel = Math.max(0, team.scrollWidth - team.clientWidth);
+          const block = pinHeight + teamTravel + borders;
+          teamSection.style.setProperty('--team-pin-top', `${stickyTop}px`);
+          teamSection.style.setProperty('--team-travel', `${teamTravel}px`);
+          teamSection.style.blockSize = `${block}px`;
+          teamStart = teamSection.getBoundingClientRect().top + scrollY + parseFloat(style.borderTopWidth) - stickyTop;
+          teamPinned = true;
+          teamBlock = block + parseFloat(style.marginBottom);
+          if (progress !== null) {
+            const next = teamStart + progress * teamTravel;
+            if (Math.abs(next - scrollY) > .5) window.scrollTo({ top: next, behavior: 'instant' });
+          } else if (!wasPinned && visible && nativeProgress > .001) {
+            window.scrollTo({ top: teamStart + nativeProgress * teamTravel, behavior: 'instant' });
+          } else if (afterRange) window.scrollTo({ top: y + teamBlock - previousBlock, behavior: 'instant' });
+        };
+        paintTeam = () => {
+          if (!teamPinned) return;
+          const left = clampTeam(scrollY - teamStart);
+          if (Math.abs(team.scrollLeft - left) > .25) team.scrollLeft = left;
+          teamHeadingTop = teamPin.getBoundingClientRect().top + parseFloat(getComputedStyle(teamPin).paddingTop);
+        };
+        // Retain the pin geometry during pagehide; a bfcache restore remeasures it.
+        $$('.member__photo', team).forEach(image => on(image, 'load', () => { layoutNeeded = true; requestTick(); }));
+      }
     }
 
     // Persistent narrowing artwork: scrolling uncovers it without changing its pose.
@@ -544,6 +618,7 @@
     const measure = () => {
       // Reserve the fixed header's actual size for initial layout and hash targets.
       root.style.setProperty('--header-h', `${header.getBoundingClientRect().height}px`);
+      measureTeam();
       // Both modes use the same natural height, so a short window cannot oscillate.
       const height = footer.getBoundingClientRect().height, fits = height <= innerHeight;
       footerHeight = height;
@@ -561,6 +636,7 @@
       // Real scroll/layout/menu events still refresh all page state immediately.
       if (!pageStateNeeded) { paintFlow(now); return; }
       pageStateNeeded = false;
+      paintTeam();
       if (preservePageEnd) {
         preservePageEnd = false;
         window.scrollTo({ top: root.scrollHeight, behavior: 'instant' });
@@ -622,7 +698,7 @@
     on(motion, 'change', requestTick);
     on(document.fonts, 'loadingdone', () => { layoutNeeded = true; requestTick(); });
     const observer = new ResizeObserver(() => { layoutNeeded = true; requestTick(); });
-    [footer, mark, page, header].filter(Boolean).forEach(element => observer.observe(element));
+    [footer, mark, page, header, teamPin].filter(Boolean).forEach(element => observer.observe(element));
     cleanups.push(() => observer.disconnect());
     $('[data-year]').textContent = new Date().getFullYear();
     root.classList.add('js');
