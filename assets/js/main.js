@@ -197,9 +197,6 @@
       }
     });
     const team = $('[data-team-scroller]');
-    const teamSection = team?.closest('.team'), teamPin = $('[data-team-pin]');
-    let teamPinned = false, teamStart = 0, teamTravel = 0;
-    let measureTeam = () => {}, paintTeam = () => {};
     let pointer = null, wheelTimer = 0, wheelStart = 0;
     if (team) {
       const snapPoints = () => {
@@ -230,7 +227,7 @@
       };
       cleanups.push(endDrag, () => { clearTimeout(wheelTimer); team.classList.remove('is-wheeling'); });
       on(team, 'pointerdown', event => {
-        if (teamPinned || event.pointerType !== 'mouse' || event.button !== 0) return;
+        if (event.pointerType !== 'mouse' || event.button !== 0) return;
         clearTimeout(wheelTimer);
         wheelTimer = 0;
         pointer = { id: event.pointerId, x: event.clientX, left: team.scrollLeft };
@@ -250,9 +247,9 @@
       ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(type => on(team, type, endDrag));
       on(team, 'dragstart', event => event.preventDefault());
       on(team, 'wheel', event => {
-        if (teamPinned) return; // Native page scrolling drives the sticky stage.
-        // Preserve horizontal/diagonal trackpad input and browser pinch/zoom gestures.
-        if (event.ctrlKey || event.metaKey || event.deltaX !== 0 || event.shiftKey || !event.deltaY) return;
+        // Plain vertical wheel input stays with the page. Horizontal trackpad
+        // input stays native; map Shift + vertical wheel input to this row.
+        if (event.ctrlKey || event.metaKey || event.deltaX !== 0 || !event.shiftKey || !event.deltaY) return;
         const max = team.scrollWidth - team.clientWidth, left = team.scrollLeft;
         if ((event.deltaY > 0 && left >= max - 1) || (event.deltaY < 0 && left <= 1) || max <= 1) return;
         const unit = event.deltaMode === 1 ? parseFloat(getComputedStyle(team).lineHeight) || 20 : event.deltaMode === 2 ? team.clientWidth : 1;
@@ -271,55 +268,8 @@
         const target = event.key === 'ArrowRight'
           ? points.find(point => point > team.scrollLeft + 2) ?? points.at(-1)
           : points.findLast(point => point < team.scrollLeft - 2) ?? 0;
-        if (teamPinned) window.scrollTo({ top: teamStart + target, behavior: motion.matches ? 'instant' : 'smooth' });
-        else team.scrollTo({ left: target, behavior: motion.matches ? 'instant' : 'smooth' });
+        team.scrollTo({ left: target, behavior: motion.matches ? 'instant' : 'smooth' });
       });
-      if (teamSection && teamPin) {
-        const resetPin = () => {
-          teamPinned = false;
-          teamTravel = 0;
-          teamSection.classList.remove('is-scroll-driven');
-          ['--team-travel', '--team-card-fit', '--team-photo-fit', '--team-pin-top'].forEach(name => teamSection.style.removeProperty(name));
-        };
-        measureTeam = () => {
-          const previousTravel = teamTravel, previousStart = teamStart;
-          const progress = teamPinned && previousTravel > 0 ? (scrollY - previousStart) / previousTravel : -1;
-          // Short/zoomed windows retain the ordinary accessible horizontal row.
-          // Pinned user-controlled scrolling is an explicit Reduce Motion exception.
-          if (innerHeight < 600 || !CSS.supports('height', '100svh')) { resetPin(); return; }
-          endDrag();
-          clearTimeout(wheelTimer); wheelTimer = 0;
-          team.classList.remove('is-dragging', 'is-wheeling');
-          teamSection.classList.add('is-scroll-driven');
-          teamSection.style.setProperty('--team-pin-top', `${header.getBoundingClientRect().height + 24}px`);
-          const heading = $('.split--head', teamPin), members = $$('.member', team);
-          // Grow the former card width by 20%, keeping the longest caption visible.
-          // Portraits retain their ratio where possible and crop within shorter stages.
-          for (let pass = 0; pass < 3; pass++) {
-            const style = getComputedStyle(teamPin);
-            const captions = Math.max(...members.map(member => member.getBoundingClientRect().height - $('picture', member).getBoundingClientRect().height));
-            const available = teamPin.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom)
-              - heading.getBoundingClientRect().height - parseFloat(getComputedStyle(heading).marginBottom) - captions;
-            if (available < 190) { resetPin(); return; }
-            teamSection.style.setProperty('--team-card-fit', `${Math.floor(available * .75) * 1.2}px`);
-            teamSection.style.setProperty('--team-photo-fit', `${Math.floor(available)}px`);
-          }
-          if (teamPin.scrollHeight > teamPin.clientHeight + 2) { resetPin(); return; }
-          teamTravel = Math.max(0, team.scrollWidth - team.clientWidth);
-          teamSection.style.setProperty('--team-travel', `${teamTravel}px`);
-          teamStart = teamSection.getBoundingClientRect().top + scrollY + parseFloat(getComputedStyle(teamSection).borderTopWidth);
-          teamPinned = true;
-          if (progress >= 0 && progress <= 1 && Math.abs(previousTravel - teamTravel) > 1) {
-            window.scrollTo({ top: teamStart + progress * teamTravel, behavior: 'instant' });
-          }
-        };
-        paintTeam = () => {
-          if (!teamPinned) return;
-          const offset = Math.max(0, Math.min(teamTravel, scrollY - teamStart));
-          if (Math.abs(team.scrollLeft - offset) > .5) team.scrollLeft = offset;
-        };
-        cleanups.push(resetPin);
-      }
     }
 
     // Persistent narrowing artwork: scrolling uncovers it without changing its pose.
@@ -594,7 +544,6 @@
     const measure = () => {
       // Reserve the fixed header's actual size for initial layout and hash targets.
       root.style.setProperty('--header-h', `${header.getBoundingClientRect().height}px`);
-      measureTeam();
       // Both modes use the same natural height, so a short window cannot oscillate.
       const height = footer.getBoundingClientRect().height, fits = height <= innerHeight;
       footerHeight = height;
@@ -612,7 +561,6 @@
       // Real scroll/layout/menu events still refresh all page state immediately.
       if (!pageStateNeeded) { paintFlow(now); return; }
       pageStateNeeded = false;
-      paintTeam();
       if (preservePageEnd) {
         preservePageEnd = false;
         window.scrollTo({ top: root.scrollHeight, behavior: 'instant' });
@@ -674,7 +622,7 @@
     on(motion, 'change', requestTick);
     on(document.fonts, 'loadingdone', () => { layoutNeeded = true; requestTick(); });
     const observer = new ResizeObserver(() => { layoutNeeded = true; requestTick(); });
-    [footer, mark, page, header, teamPin].filter(Boolean).forEach(element => observer.observe(element));
+    [footer, mark, page, header].filter(Boolean).forEach(element => observer.observe(element));
     cleanups.push(() => observer.disconnect());
     $('[data-year]').textContent = new Date().getFullYear();
     root.classList.add('js');

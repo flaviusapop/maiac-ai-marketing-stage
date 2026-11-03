@@ -399,15 +399,14 @@ body.menu-open::after {
 
 /* Team: horizontal scroller. Starts on the page gutter, bleeds off the right edge. */
 .team {
-  --team-card-base: 648px;
-  --team-card-size: var(--team-card-base);
+  --team-card-size: 540px;
   padding-bottom: var(--section-pad);
 }
-@media (max-width: 899px) { .team { --team-card-base: 93.6vw; } }
+@media (max-width: 899px) { .team { --team-card-size: 78vw; } }
 .team__scroller {
   overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--gutter);
+  scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)) var(--gutter);
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   cursor: grab;
@@ -424,33 +423,8 @@ body.menu-open::after {
 .member > picture { border-radius: var(--radius-media); overflow: clip; }
 .member__photo { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; background: #eee; pointer-events: none; }
 .member__portrait--valentin { overflow: clip; }
-.member__portrait--valentin .member__photo { transform: scale(1.2); transform-origin: 50% 87%; }
 .member__name { margin-top: 20px; font-size: 22px; font-weight: 500; line-height: 1.4; }
 .member__role { margin-top: 4px; font-size: 16px; line-height: 1.4; color: var(--muted); }
-
-/* Page scroll drives the row only after the enhancement measures a fitting stage. */
-.js .team.is-scroll-driven {
-  --team-card-size: min(var(--team-card-base), var(--team-card-fit, 648px));
-  padding-block: 0;
-  block-size: calc(100svh + var(--team-travel, 0px));
-}
-.js .is-scroll-driven .team__pin {
-  position: sticky;
-  inset-block-start: 0;
-  block-size: 100svh;
-  padding-block: var(--team-pin-top, 100px) 24px;
-  background: var(--paper);
-}
-.js .is-scroll-driven .split--head { margin-block-end: clamp(24px, 3svh, 32px); }
-.js .is-scroll-driven .team__scroller {
-  overflow-x: hidden;
-  scroll-snap-type: none;
-  overscroll-behavior-x: auto;
-  touch-action: pan-y pinch-zoom;
-  cursor: auto;
-}
-/* Larger frames keep captions on screen when the pinned stage limits photo height. */
-.js .is-scroll-driven .member__photo { max-block-size: var(--team-photo-fit, none); }
 
 /* Trusted by */
 .trusted { padding-block: 64px; background: var(--paper); }
